@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Chatbot</title>
+    <title>Simple Chatbot</title>
     <style>
         body { font-family: Arial, sans-serif; }
         #chat-box { width: 80%; max-width: 600px; margin: 0 auto; padding: 10px; border: 1px solid #ccc; height: 400px; overflow-y: auto; }
@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <h1>Chat with PythonBot</h1>
+    <h1>Simple Chatbot</h1>
     <div id="chat-box"></div>
     <input type="text" id="user-input" placeholder="Ask something..." onkeypress="if(event.keyCode == 13){sendMessage();}">
     <script>
@@ -21,6 +21,7 @@
             var userMessage = document.getElementById("user-input").value;
             if(userMessage.trim() == "") return;
 
+            // Display user's message in the chatbox
             document.getElementById("chat-box").innerHTML += "<div class='user-msg'>User: " + userMessage + "</div>";
 
             // Make an AJAX request to get the bot's response

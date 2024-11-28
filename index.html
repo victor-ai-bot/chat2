@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chat-box { width: 80%; max-width: 600px; margin: 0 auto; padding: 10px; border: 1px solid #ccc; height: 400px; overflow-y: auto; }
+        .user-msg { color: blue; margin: 10px; }
+        .bot-msg { color: green; margin: 10px; }
+        input[type="text"] { width: 80%; padding: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Chat with PythonBot</h1>
+    <div id="chat-box"></div>
+    <input type="text" id="user-input" placeholder="Ask something..." onkeypress="if(event.keyCode == 13){sendMessage();}">
+    <script>
+        function sendMessage() {
+            var userMessage = document.getElementById("user-input").value;
+            if(userMessage.trim() == "") return;
+
+            document.getElementById("chat-box").innerHTML += "<div class='user-msg'>User: " + userMessage + "</div>";
+
+            // Make an AJAX request to get the bot's response
+            fetch(`/get?msg=${userMessage}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("chat-box").innerHTML += "<div class='bot-msg'>Bot: " + data.response + "</div>";
+                    document.getElementById("user-input").value = "";
+                });
+        }
+    </script>
+</body>
+</html>

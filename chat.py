@@ -1,18 +1,17 @@
 from flask import Flask, render_template, request, jsonify
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
-from flask_cors import CORS
 
-# Initialize Flask app
 app = Flask(__name__)
-CORS(app)
 
-# Initialize the chatbot
-chatbot = ChatBot('PythonBot')
-
-# Set up the chatbot's training
-trainer = ChatterBotCorpusTrainer(chatbot)
-trainer.train('chatterbot.corpus.english')
+# A simple function to get predefined responses
+def get_response(user_input):
+    responses = {
+        "hello": "Hi there! How can I assist you today?",
+        "how are you": "I'm good, thank you for asking!",
+        "bye": "Goodbye! Have a great day!",
+        "default": "I'm sorry, I don't understand that. Can you try again?"
+    }
+    # Convert user input to lowercase and check for response
+    return responses.get(user_input.lower(), responses["default"])
 
 @app.route("/")
 def index():
@@ -21,7 +20,8 @@ def index():
 @app.route("/get", methods=["GET", "POST"])
 def get_bot_response():
     user_input = request.args.get('msg')
-    return jsonify({"response": str(chatbot.get_response(user_input))})
+    bot_response = get_response(user_input)
+    return jsonify({"response": bot_response})
 
 if __name__ == "__main__":
     app.run(debug=True)
